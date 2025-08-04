@@ -1,0 +1,50 @@
+// Create SA
+resource "yandex_iam_service_account" "tfstate-user" {
+  folder_id = var.cloud.netology.folder_id
+  name      = "tfstate-user"
+}
+
+// Grant permissions
+resource "yandex_resourcemanager_folder_iam_member" "tfstate-user" {
+  folder_id = var.cloud.netology.folder_id
+  role      = "editor"
+  member    = "serviceAccount:${yandex_iam_service_account.tfstate-user.id}"
+}
+
+// Create Static Access Keys
+resource "yandex_iam_service_account_static_access_key" "tfstate-user-static-key" {
+  service_account_id = yandex_iam_service_account.tfstate-user.id
+}
+
+// Create encryprion key
+resource "yandex_kms_symmetric_key" "encryptkey" {
+ name              = "encryptkey"
+ default_algorithm = "AES_256"
+ rotation_period   = "8760h"
+}
+
+resource "yandex_storage_bucket" "diplomtfstate" {
+  access_key = yandex_iam_service_account_static_access_key.tfstate-user-static-key.access_key
+  secret_key = yandex_iam_service_account_static_access_key.tfstate-user-static-key.secret_key
+  bucket     = "diplomtfstate"
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        kms_master_key_id = yandex_kms_symmetric_key.encryptkey.id
+        sse_algorithm     = "aws:kms"
+      }
+    }
+  }
+#  versioning {
+#    enabled = true
+#  }
+
+  provisioner "local-exec" {
+    command = "echo export S3_ACCESS_KEY=${yandex_iam_service_account_static_access_key.tfstate-user-static-key.access_key} > ../private/terraform-access-key.txt"
+  }
+
+  provisioner "local-exec" {
+    command = "echo export S3_SECRET_KEY=${yandex_iam_service_account_static_access_key.tfstate-user-static-key.secret_key} > ../private/terraform-secret-key.txt"
+  }
+}
+

@@ -1,0 +1,10 @@
+terraform-bucket/.terraform.lock.hcl
+terraform-bucket/.terraform
+terraform/.terraform.lock.hcl
+terraform/.terraform
+private/for_storage_editor.json
+terraform-bucket/.terraform.tfstate.lock.info
+terraform-bucket/terraform.tfstate
+terraform-bucket/terraform.tfstate.backup
+private/terraform-access-key.txt
+private/terraform-secret-key.txt
