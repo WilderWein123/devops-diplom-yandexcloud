@@ -48,6 +48,14 @@
 https://github.com/WilderWein123/devops-diplom-yandexcloud/tree/main/terraform-bucket
 
 3. Создайте конфигурацию Terrafrom, используя созданный бакет ранее как бекенд для хранения стейт файла. Конфигурации Terraform для создания сервисного аккаунта и бакета и основной инфраструктуры следует сохранить в разных папках.
+
+Основной код REPOROOT/terraform
+Код создания бакета REPOROOT/terraform-bucket
+После создания бакета выхлоп отправляется в 2 временных файла в директорию REPOROOT/private (добавлена в целях безопасности в gitingore), по завершении деплоя выполняем `terraform init -backend-config="access_key=$ACCESS_KEY" -backend-config="secret_key=$SECRET_KEY"
+`
+
+<img src = "images/img1-3.jpg" width = 100%>
+
 4. Создайте VPC с подсетями в разных зонах доступности.
 5. Убедитесь, что теперь вы можете выполнить команды `terraform destroy` и `terraform apply` без дополнительных ручных действий.
 6. В случае использования [Terraform Cloud](https://app.terraform.io/) в качестве [backend](https://developer.hashicorp.com/terraform/language/backend) убедитесь, что применение изменений успешно проходит, используя web-интерфейс Terraform cloud.
