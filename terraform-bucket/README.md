@@ -14,4 +14,5 @@
 2. Если все выполнено корректно, в файлы 
 - /private/terraform-access-key.txt
 - /private/terraform-access-key.txt
+
 сохраняем данные для дальнейшего использования (в нашем слуае храения tfstate)
