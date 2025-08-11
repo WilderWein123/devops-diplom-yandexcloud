@@ -15,5 +15,5 @@ resource "yandex_vpc_subnet" "kuber-b" {
 resource "yandex_vpc_subnet" "kuber-d" {
   zone           = "ru-central1-d"
   network_id     = yandex_vpc_network.kuber.id
-  v4_cidr_blocks = ["10.4.98.0/24"]
+  v4_cidr_blocks = ["10.4.97.0/24"]
 }

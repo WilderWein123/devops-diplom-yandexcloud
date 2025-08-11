@@ -63,7 +63,7 @@ variable kubernetes-nodes {
       platform_id = "standard-v2"
       nat = true
       nodecpu = 2
-      nodecorefraction = 5
+      nodecorefraction = 20
       noderam = 2
       nodehddtype = "network-ssd"
       nodehddsize = 10

@@ -1,0 +1,19 @@
+#cloud-config
+users:
+  - name: seregin
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5YomKL8licFR1heO5WoZl9K8lztjhLWOrXTJW9/nHVJv2hEcSHrmKxqjhwNv/JA1MKfiK/vwLPsFD5608945IUl+psM4Bnak7esZrvPg/rinz2jvxCwP6f/n6n4pMQemikCuVXvCXlJjDVkjT4DDVSuZ7BiStHT+DH1xFzxP+0aZ+lUjHB21UhtiGLlJHav4F2K3uAl7S9n7ufaAUFZEpx3zRlHlryQuxldHkMq3Hgu4JkxzmYGoUvAL0/emfsZn7PUWVUlpHqo98ii4e6SVIMy63vpcudjAIq4ht+veQbJbOTQ7127Obc+6jfBgpXDZCcM6PUAILyEmtTHfdSI9D
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo
+    shell: /bin/bash
+package_update: true
+package_upgrade: true
+packages:
+  - nginx
+  - nano
+  - git
+  - jq
+runcmd:
+  - sudo apt-get update
+  - curl --location https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+  - sudo apt-get -y install gitlab-runner

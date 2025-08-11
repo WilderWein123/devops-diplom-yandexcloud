@@ -24,9 +24,13 @@ resource "yandex_kubernetes_node_group" "main_nodes" {
       nat = var.kubernetes-nodes.nodegroup.nat
     }
 
-    metadata = {
-      ssh-keys = var.ssh_key
-    }
+#    metadata = {
+#      ssh-keys = var.ssh_key
+#    }
+  metadata = {
+    user-data = "${file("cloud-init.yaml")}"
+ }
+
 
     resources {
       cores  = var.kubernetes-nodes.nodegroup.nodecpu
