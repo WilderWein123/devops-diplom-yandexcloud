@@ -104,15 +104,18 @@ https://github.com/WilderWein123/devops-diplom-yandexcloud/tree/main/terraform-b
 
 Ожидаемый результат:
 
-1. Git репозиторий с тестовым приложением и Dockerfile.
+> 1. Git репозиторий с тестовым приложением и Dockerfile.
+
+https://gitlab.com/devops-netology6075740/devops-diplom-yandexcloud
 
 > 2. Регистри с собранным docker image. В качестве регистри может быть DockerHub или [Yandex Container Registry](https://cloud.yandex.ru/services/container-registry), созданный также с помощью terraform.
 
 Я выбрал DockerHub:
 
 <img src = "images/img3-1.jpg" width = 100%>
-
 <img src = "images/img3-2.jpg" width = 100%>
+
+https://hub.docker.com/repository/docker/wilderwein123/devops-diplom-yandexcloud/general
 
 ---
 ### Подготовка cистемы мониторинга и деплой приложения
