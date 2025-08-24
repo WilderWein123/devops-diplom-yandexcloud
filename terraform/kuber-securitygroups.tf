@@ -1,7 +1,7 @@
 resource "yandex_vpc_security_group" "regional-k8s-sg" {
   name        = "regional-k8s-sg"
   network_id  = yandex_vpc_network.network.id
-  folder_id   = var.cloud.mycluster.folder_id
+  folder_id   = var.cloud.netology.folder_id
   ingress {
     protocol          = "TCP"
     description       = "lb -> kubernetes cluster"

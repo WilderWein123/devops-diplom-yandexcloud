@@ -1,50 +1,53 @@
-resource "yandex_kubernetes_node_group" "main_nodes" {
+resource "yandex_kubernetes_node_group" "node_groups" {
+  for_each = {
+    a = 0
+    b = 1
+    d = 2
+  }
+
   cluster_id = yandex_kubernetes_cluster.netology_k8s.id
-  name       = var.kubernetes-nodes.nodegroup.name
-  version    = var.kubernetes.mycluster.version
+  name       = "autoscaling-node-group-${each.key}"
+
+  instance_template {
+    platform_id = var.node_group_vm[0].platform_id
+    resources {
+      cores         = var.node_group_vm[0].cores
+      core_fraction = var.node_group_vm[0].core_fraction
+      memory        = var.node_group_vm[0].memory
+    }
+
+    boot_disk {
+      type = var.node_group_vm[0].disk_type
+      size = var.node_group_vm[0].disk_size
+    }
+
+    container_runtime {
+      type = var.node_group_vm[0].container_runtime
+    }
+
+    scheduling_policy {
+      preemptible = var.node_group_vm[0].preemptible
+    }
+
+    network_interface {
+      subnet_ids = [yandex_vpc_subnet.public_subnets[each.value].id]
+      nat        = var.node_group_vm[0].nat
+    }
+  }
 
   scale_policy {
     auto_scale {
-      min     = var.kubernetes-nodes.nodegroup.autoscalemin
-      max     = var.kubernetes-nodes.nodegroup.autoscalemax
-      initial = var.kubernetes-nodes.nodegroup.autoscaleinit
+      min     = var.node_group_vm[0].scale_count_min
+      max     = var.node_group_vm[0].scale_count_max
+      initial = var.node_group_vm[0].scale_count_initial
     }
   }
 
   allocation_policy {
     location {
-      zone = var.kubernetes.mycluster.region
+      zone = yandex_vpc_subnet.public_subnets[each.value].zone
     }
   }
 
-  instance_template {
-    platform_id = var.kubernetes-nodes.nodegroup.platform_id
-    network_interface {
-      subnet_ids = [yandex_vpc_subnet.kuber-a.id]
-      nat = var.kubernetes-nodes.nodegroup.nat
-    }
-
-#    metadata = {
-#      ssh-keys = var.ssh_key
-#    }
-  metadata = {
-    user-data = "${file("cloud-init.yaml")}"
- }
-
-
-    resources {
-      cores  = var.kubernetes-nodes.nodegroup.nodecpu
-      core_fraction = var.kubernetes-nodes.nodegroup.nodecorefraction
-      memory = var.kubernetes-nodes.nodegroup.noderam
-    }
-
-    boot_disk {
-      type = var.kubernetes-nodes.nodegroup.nodehddtype
-      size = var.kubernetes-nodes.nodegroup.nodehddsize
-    }
-
-    scheduling_policy {
-      preemptible = var.kubernetes-nodes.nodegroup.preemptible
-    }
-  }
+  depends_on = [yandex_kubernetes_cluster.netology_k8s]
 }

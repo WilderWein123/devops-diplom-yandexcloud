@@ -11,7 +11,6 @@ resource "yandex_kms_symmetric_key" "kms-key" {
 variable "service_account_name" {
   type        = string
   default     = "k8s-svc"
-  description = "Сервисный аккаунт для кластера Kubernetes"
 }
 
 #kube_output config path
@@ -20,3 +19,23 @@ variable "kube_config" {
   default = "/home/seregin/scripts/devops-diplom-yandexcloud/devops-diplom-yandexcloud/private/config"
 }
 
+variable kubernetes {
+  type = map(object({
+    name = string
+    clusternet = string
+    servicenet = string
+    region = string
+    version = string
+    public_ip = bool
+  }))
+  default = {
+    "mycluster" = {
+      name = "netology-k8s-cluster"
+      clusternet = "10.1.0.0/16"
+      servicenet = "10.2.0.0/16"
+      region = "ru-central1-a"
+      version = "1.29"
+      public_ip = true
+    }
+  }
+}
