@@ -9,7 +9,7 @@ backend "s3" {
     endpoints = {
       s3 = "https://storage.yandexcloud.net"
     }
-    bucket = "diplom-tfstate"
+    bucket = "diplom-bucket"
     region = "ru-central1"
     key    = ".tfstate"
 
@@ -22,7 +22,7 @@ backend "s3" {
 
 
 provider "yandex" {
-  service_account_key_file = "/home/seregin/scripts/devops-diplom-yandexcloud/devops-diplom-yandexcloud/private/for_storage_editor.json"
+  service_account_key_file = "/home/seregin/scripts/devops-diplom-yandexcloud/devops-diplom-yandexcloud/private/for_kubernetes_cluster.json"
   cloud_id                 = var.cloud.netology.cloud_id
   folder_id                = var.cloud.netology.folder_id
   zone                     = var.cloud.netology.default_zone

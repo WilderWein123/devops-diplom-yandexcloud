@@ -87,6 +87,15 @@ https://github.com/WilderWein123/devops-diplom-yandexcloud/tree/main/terraform-b
 2. В файле `~/.kube/config` находятся данные для доступа к кластеру.
 3. Команда `kubectl get pods --all-namespaces` отрабатывает без ошибок.
 
+Добавил к автоматизации генерацию конфиг файла для kbuernetes через шаблон kubeconfig.tpl. Файл генерируется в директорию /private (gitignore). Соответственно для подключения к инфраструктуре достаточно выполнить:
+
+```
+sudo cp ~/scripts/devops-diplom-yandexcloud/devops-diplom-yandexcloud/private/config ~/.kube
+```
+
+Kubernetes еще поднимается, но тем не менее мастер уже готов, и статус вполне возможно получить:
+
+<img src = "images/img2-1.jpg" width = 100%>
 
 
 ---

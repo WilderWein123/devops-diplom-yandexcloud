@@ -17,8 +17,8 @@ variable "node_group_vm" {
   default = [{
     cores               = 2
     memory              = 2
-    core_fraction       = 5
-    disk_size           = 10
+    core_fraction       = 20
+    disk_size           = 16
     disk_type           = "network-hdd"
     container_runtime   = "containerd"
     preemptible         = true

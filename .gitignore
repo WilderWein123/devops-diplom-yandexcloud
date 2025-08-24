@@ -8,3 +8,5 @@ terraform-bucket/terraform.tfstate
 terraform-bucket/terraform.tfstate.backup
 private/terraform-access-key.txt
 private/terraform-secret-key.txt
+private/for_kubernetes_cluster.json
+private/config

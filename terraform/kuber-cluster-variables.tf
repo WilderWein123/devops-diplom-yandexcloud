@@ -31,8 +31,8 @@ variable kubernetes {
   default = {
     "mycluster" = {
       name = "netology-k8s-cluster"
-      clusternet = "10.1.0.0/16"
-      servicenet = "10.2.0.0/16"
+      clusternet = "10.95.0.0/16"
+      servicenet = "10.94.0.0/16"
       region = "ru-central1-a"
       version = "1.29"
       public_ip = true
