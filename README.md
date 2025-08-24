@@ -61,6 +61,16 @@ https://github.com/WilderWein123/devops-diplom-yandexcloud/tree/main/terraform-b
 
 <img src = "images/img1-3.jpg" width = 100%>
 
+
+Стейт в оьблаке яндекса:
+
+<img src = "images/img2-2.jpg" width = 100%>
+
+Скриншот бакета в яндкесе:
+
+<img src = "images/img2-3.jpg" width = 100%>
+
+
 Ожидаемые результаты:
 
 1. Terraform сконфигурирован и создание инфраструктуры посредством Terraform возможно без дополнительных ручных действий, стейт основной конфигурации сохраняется в бакете или Terraform Cloud
