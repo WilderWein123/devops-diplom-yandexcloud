@@ -64,7 +64,7 @@ https://github.com/WilderWein123/devops-diplom-yandexcloud/tree/main/terraform-b
 
 Стейт в оьблаке яндекса:
 
-<img src = "images/img2-2.jpg" width = 100%>
+<img src = "images/img1-4.jpg" width = 100%>
 
 Скриншот бакета в яндкесе:
 
