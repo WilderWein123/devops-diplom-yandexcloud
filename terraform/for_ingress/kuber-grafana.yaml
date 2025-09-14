@@ -17,3 +17,10 @@ spec:
             name: prometheus-grafana
             port:
               number: 80
+      - path: /devops-diplom-app
+        pathType: Prefix
+        backend:
+          service:
+            name: devops-diplom-app-service
+            port:
+              number: 80

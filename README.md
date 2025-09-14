@@ -190,6 +190,16 @@ seregin@workstation:~/scripts/devops-diplom-yandexcloud/devops-diplom-yandexclou
 
 http://158.160.179.7/public-dashboards/823ccc7d43bd4885918b31f7821f942f
 
+Займемся приложением. Репозиторий https://github.com/WilderWein123/devops-diplom-app/tree/main .
+
+Первым делом собираем докер образ и льем в докерхаб:
+
+```
+cd ~/scripts/devops-diplom-app/
+docker login -u wilderwein123
+docker build -f Dockerfile . -t wilderwein123/devops-diplom-app:1.0.0
+docker push wilderwein123/devops-diplom-app:1.0.0
+```
 
 ---
 ### Установка и настройка CI/CD
@@ -205,9 +215,14 @@ http://158.160.179.7/public-dashboards/823ccc7d43bd4885918b31f7821f942f
 
 Ожидаемый результат:
 
-1. Интерфейс ci/cd сервиса доступен по http.
-2. При любом коммите в репозиторие с тестовым приложением происходит сборка и отправка в регистр Docker образа.
-3. При создании тега (например, v1.0.0) происходит сборка и отправка с соответствующим label в регистри, а также деплой соответствующего Docker образа в кластер Kubernetes.
+> 1. Интерфейс ci/cd сервиса доступен по http.
+> 2. При любом коммите в репозиторие с тестовым приложением происходит сборка и отправка в регистр Docker образа.
+> 3. При создании тега (например, v1.0.0) происходит сборка и отправка с соответствующим label в регистри, а также деплой соответствующего Docker образа в кластер Kubernetes.
+
+Для унификации будем использовать github actions. Сочиняем пайплайн и добавляем actions, по условиям задачи все должно лежать в отдельном репозитории - https://github.com/WilderWein123/devops-diplom-app .
+
+Заполняем секреты - `DOCKER_LOGIN` - учетная запись в DockerHub, `DOCKER_PASSWORD` - сгенерированный в докерхабе токен (Personal Access Token -> New Access Token), 'KUBE_CONFIG_DATA' - зашированный командой `cat ~/.kube/config | base64` конфиг kubectl . Для дешифрации внутри пайплайна будем использовать обратную команду - `echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > kubeconfig` .
+
 
 ---
 ## Что необходимо для сдачи задания?
