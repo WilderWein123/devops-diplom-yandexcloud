@@ -122,7 +122,19 @@ helm repo update && \
 helm install prometheus prometheus-community/kube-prometheus-stack --namespace=custom
 ```
 
-Создаем yaml для ingress под grafana 
+Создаем yaml для ingress под grafana https://github.com/WilderWein123/devops-diplom-yandexcloud/blob/main/terraform/for_ingress/kuber-grafana.yaml и применяем его kubectl apply -f kuber-grafana.yaml. Убеждаемся что ингресс работает:
+
+И достаем пароль суперпользрвателя:
+
+```
+seregin@workstation:~/scripts/devops-diplom-yandexcloud/devops-diplom-yandexcloud$ kubectl --namespace custom get secrets prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+prom-operator
+seregin@workstation:~/scripts/devops-diplom-yandexcloud/devops-diplom-yandexcloud$ 
+```
+
+Оставляем как есть (разумеется, в проде мы так делать не будем).
+
+<img src = "images/img2-4.jpg" width = 100%>
 
 ---
 ### Создание тестового приложения
