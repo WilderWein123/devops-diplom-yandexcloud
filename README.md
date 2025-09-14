@@ -110,32 +110,6 @@ Kubernetes еще поднимается, но тем не менее масте
 
 <img src = "images/img2-2.jpg" width = 100%>
 
-Теперь вручную (тк операция в целом разовая) добавляем helm-чарты для ингресс-контроллера и kube-prometheus
-
-```
-kubectl create ns custom
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx && \
-helm repo update && \
-helm install ingress-nginx ingress-nginx/ingress-nginx --namespace=custom
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts && \
-helm repo update && \
-helm install prometheus prometheus-community/kube-prometheus-stack --namespace=custom
-```
-
-Создаем yaml для ingress под grafana https://github.com/WilderWein123/devops-diplom-yandexcloud/blob/main/terraform/for_ingress/kuber-grafana.yaml и применяем его kubectl apply -f kuber-grafana.yaml. Убеждаемся что ингресс работает:
-
-И достаем пароль суперпользрвателя:
-
-```
-seregin@workstation:~/scripts/devops-diplom-yandexcloud/devops-diplom-yandexcloud$ kubectl --namespace custom get secrets prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
-prom-operator
-seregin@workstation:~/scripts/devops-diplom-yandexcloud/devops-diplom-yandexcloud$ 
-```
-
-Оставляем как есть (разумеется, в проде мы так делать не будем).
-
-<img src = "images/img2-4.jpg" width = 100%>
-
 ---
 ### Создание тестового приложения
 
@@ -182,11 +156,41 @@ https://hub.docker.com/repository/docker/wilderwein123/devops-diplom-yandexcloud
 1. Если на первом этапе вы не воспользовались [Terraform Cloud](https://app.terraform.io/), то задеплойте и настройте в кластере [atlantis](https://www.runatlantis.io/) для отслеживания изменений инфраструктуры. Альтернативный вариант 3 задания: вместо Terraform Cloud или atlantis настройте на автоматический запуск и применение конфигурации terraform из вашего git-репозитория в выбранной вами CI-CD системе при любом комите в main ветку. Предоставьте скриншоты работы пайплайна из CI/CD системы.
 
 Ожидаемый результат:
-1. Git репозиторий с конфигурационными файлами для настройки Kubernetes.
-2. Http доступ на 80 порту к web интерфейсу grafana.
-3. Дашборды в grafana отображающие состояние Kubernetes кластера.
-4. Http доступ на 80 порту к тестовому приложению.
-5. Atlantis или terraform cloud или ci/cd-terraform
+> 1. Git репозиторий с конфигурационными файлами для настройки Kubernetes.
+> 2. Http доступ на 80 порту к web интерфейсу grafana.
+> 3. Дашборды в grafana отображающие состояние Kubernetes кластера.
+> 4. Http доступ на 80 порту к тестовому приложению.
+> 5. Atlantis или terraform cloud или ci/cd-terraform
+
+Для начала займемся графаной:
+
+Теперь вручную (тк операция в целом разовая) добавляем helm-чарты для ингресс-контроллера и kube-prometheus
+
+```
+kubectl create ns custom
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx && \
+helm repo update && \
+helm install ingress-nginx ingress-nginx/ingress-nginx --namespace=custom
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts && \
+helm repo update && \
+helm install prometheus prometheus-community/kube-prometheus-stack --namespace=custom
+```
+
+Создаем yaml для ingress под grafana https://github.com/WilderWein123/devops-diplom-yandexcloud/blob/main/terraform/for_ingress/kuber-grafana.yaml и применяем его kubectl apply -f kuber-grafana.yaml. Убеждаемся что ингресс работает:
+
+И достаем пароль суперпользрвателя:
+
+```
+seregin@workstation:~/scripts/devops-diplom-yandexcloud/devops-diplom-yandexcloud$ kubectl --namespace custom get secrets prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo
+```
+
+Оставляем как есть (разумеется, в проде мы так делать не будем).
+
+<img src = "images/img2-4.jpg" width = 100%>
+
+http://158.160.179.7/public-dashboards/823ccc7d43bd4885918b31f7821f942f
+
+
 ---
 ### Установка и настройка CI/CD
 
