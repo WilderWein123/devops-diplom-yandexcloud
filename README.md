@@ -223,6 +223,17 @@ docker push wilderwein123/devops-diplom-app:1.0.0
 
 Заполняем секреты - `DOCKER_LOGIN` - учетная запись в DockerHub, `DOCKER_PASSWORD` - сгенерированный в докерхабе токен (Personal Access Token -> New Access Token), 'KUBE_CONFIG_DATA' - зашированный командой `cat ~/.kube/config | base64` конфиг kubectl . Для дешифрации внутри пайплайна будем использовать обратную команду - `echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > kubeconfig` .
 
+Попутно допиливаем for_ingress/kuber-grafana.yaml - ранее у нас был создан ингресс только для grafana, теперь надо добавить сюда наше приложение:
+
+```
+kubectl apply -f deployment.yaml 
+kubectl apply -f service.yaml 
+kubectl apply -f kuber-grafana.yaml
+```
+
+Проверяем что приложение работает
+
+<img src = "images/img4-1.jpg" width = 100%>
 
 ---
 ## Что необходимо для сдачи задания?
