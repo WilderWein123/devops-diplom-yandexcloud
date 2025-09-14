@@ -1,19 +1,19 @@
-// Create SA
-resource "yandex_iam_service_account" "tfstate-user" {
+// Create service account
+resource "yandex_iam_service_account" "netology-tfstate-user" {
   folder_id = var.cloud.netology.folder_id
   name      = var.bucket.tfstate.bucketuser
 }
 
 // Grant permissions
-resource "yandex_resourcemanager_folder_iam_member" "tfstate-user" {
+resource "yandex_resourcemanager_folder_iam_member" "netology-tfstate-user" {
   folder_id = var.cloud.netology.folder_id
   role      = var.bucket.tfstate.role
-  member    = "serviceAccount:${yandex_iam_service_account.tfstate-user.id}"
+  member    = "serviceAccount:${yandex_iam_service_account.netology-tfstate-user.id}"
 }
 
 // Create Static Access Keys
 resource "yandex_iam_service_account_static_access_key" "tfstate-user-static-key" {
-  service_account_id = yandex_iam_service_account.tfstate-user.id
+  service_account_id = yandex_iam_service_account.netology-tfstate-user.id
 }
 
 // Create encryprion key

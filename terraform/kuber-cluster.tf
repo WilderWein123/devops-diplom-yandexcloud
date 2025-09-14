@@ -25,10 +25,15 @@ resource "yandex_kubernetes_cluster" "netology_k8s" {
   kms_provider {
     key_id = yandex_kms_symmetric_key.kms-key.id
   }
+
+depends_on = [yandex_iam_service_account.k8s-svc]
+
 }
+
 
 resource "yandex_resourcemanager_folder_iam_member" "k8s-clusters-agent" {
   folder_id = var.cloud.netology.folder_id
   role      = var.kubernetes-key.mycluster.role
   member    = "serviceAccount:${yandex_iam_service_account.k8s-svc.id}"
 }
+

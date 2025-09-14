@@ -2,6 +2,7 @@ terraform {
   required_providers {
     yandex = {
       source = "yandex-cloud/yandex"
+      version = "0.147.0"
     }
   }
 
@@ -9,7 +10,7 @@ backend "s3" {
     endpoints = {
       s3 = "https://storage.yandexcloud.net"
     }
-    bucket = "diplom-bucket"
+    bucket = "diplomtfstate"
     region = "ru-central1"
     key    = ".tfstate"
 

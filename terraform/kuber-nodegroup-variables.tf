@@ -18,7 +18,7 @@ variable "node_group_vm" {
     cores               = 2
     memory              = 2
     core_fraction       = 20
-    disk_size           = 16
+    disk_size           = 30
     disk_type           = "network-hdd"
     container_runtime   = "containerd"
     preemptible         = true

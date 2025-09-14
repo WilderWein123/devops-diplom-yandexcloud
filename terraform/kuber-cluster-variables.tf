@@ -34,7 +34,7 @@ variable kubernetes {
       clusternet = "10.95.0.0/16"
       servicenet = "10.94.0.0/16"
       region = "ru-central1-a"
-      version = "1.29"
+      version = "1.30"
       public_ip = true
     }
   }

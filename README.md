@@ -38,7 +38,7 @@
 
 > 1. Создайте сервисный аккаунт, который будет в дальнейшем использоваться Terraform для работы с инфраструктурой с необходимыми и достаточными правами. Не стоит использовать права суперпользователя
 
-Для выполнения потребовалось создать аккаунт с ролью storage.editor . 
+Для выполнения потребовалось создать аккаунт с ролью storage.admin . 
 
 > 2. Подготовьте [backend](https://developer.hashicorp.com/terraform/language/backend) для Terraform:  
    а. Рекомендуемый вариант: S3 bucket в созданном ЯО аккаунте(создание бакета через TF)
@@ -61,12 +61,11 @@ https://github.com/WilderWein123/devops-diplom-yandexcloud/tree/main/terraform-b
 
 <img src = "images/img1-3.jpg" width = 100%>
 
-
-Стейт в оьблаке яндекса:
+Стейт в оьблаке яндекса (скриншот после создания kubernetes-кластера, т.к. изначально стейт пустой):
 
 <img src = "images/img1-4.jpg" width = 100%>
 
-Скриншот бакета в яндкесе:
+Скриншот бакета в яндкесе (скриншот после создания kubernetes-кластера, т.к. изначально стейт пустой):
 
 <img src = "images/img2-3.jpg" width = 100%>
 
@@ -111,6 +110,19 @@ Kubernetes еще поднимается, но тем не менее масте
 
 <img src = "images/img2-2.jpg" width = 100%>
 
+Теперь вручную (тк операция в целом разовая) добавляем helm-чарты для ингресс-контроллера и kube-prometheus
+
+```
+kubectl create ns custom
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx && \
+helm repo update && \
+helm install ingress-nginx ingress-nginx/ingress-nginx --namespace=custom
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts && \
+helm repo update && \
+helm install prometheus prometheus-community/kube-prometheus-stack --namespace=custom
+```
+
+Создаем yaml для ingress под grafana 
 
 ---
 ### Создание тестового приложения
