@@ -255,6 +255,8 @@ kubectl apply -f kuber-grafana.yaml
 
 Итоговый результат https://github.com/WilderWein123/devops-diplom-app/tree/main/.github/workflows
 
+Ингресс: https://github.com/WilderWein123/devops-diplom-yandexcloud/blob/main/terraform/for_ingress/kuber-grafana.yaml
+
 Проверяем что приложение работает (для начала на локальном докере)
 
 ```
