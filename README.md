@@ -127,7 +127,7 @@ Kubernetes еще поднимается, но тем не менее масте
 
 > 1. Git репозиторий с тестовым приложением и Dockerfile.
 
-https://gitlab.com/devops-netology6075740/devops-diplom-yandexcloud
+https://github.com/WilderWein123/devops-diplom-app
 
 > 2. Регистри с собранным docker image. В качестве регистри может быть DockerHub или [Yandex Container Registry](https://cloud.yandex.ru/services/container-registry), созданный также с помощью terraform.
 
@@ -136,7 +136,7 @@ https://gitlab.com/devops-netology6075740/devops-diplom-yandexcloud
 <img src = "images/img3-1.jpg" width = 100%>
 <img src = "images/img3-2.jpg" width = 100%>
 
-https://hub.docker.com/repository/docker/wilderwein123/devops-diplom-yandexcloud/general
+https://hub.docker.com/repository/docker/wilderwein123/devops-diplom-app/general
 
 ---
 ### Подготовка cистемы мониторинга и деплой приложения
@@ -201,6 +201,10 @@ docker build -f Dockerfile . -t wilderwein123/devops-diplom-app:1.0.0
 docker push wilderwein123/devops-diplom-app:1.0.0
 ```
 
+Dockerfile:
+
+https://github.com/WilderWein123/devops-diplom-app/blob/main/Dockerfile
+
 ---
 ### Установка и настройка CI/CD
 
@@ -221,7 +225,25 @@ docker push wilderwein123/devops-diplom-app:1.0.0
 
 Для унификации будем использовать github actions. Сочиняем пайплайн и добавляем actions, по условиям задачи все должно лежать в отдельном репозитории - https://github.com/WilderWein123/devops-diplom-app .
 
-Заполняем секреты - `DOCKER_LOGIN` - учетная запись в DockerHub, `DOCKER_PASSWORD` - сгенерированный в докерхабе токен (Personal Access Token -> New Access Token), 'KUBE_CONFIG_DATA' - зашированный командой `cat ~/.kube/config | base64` конфиг kubectl . Для дешифрации внутри пайплайна будем использовать обратную команду - `echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > kubeconfig` .
+Заполняем секреты - `DOCKER_LOGIN` - учетная запись в DockerHub, `DOCKER_PASSWORD` - сгенерированный в докерхабе токен (Personal Access Token -> New Access Token).
+'KUBE_CONFIG_DATA' - зашированный командой `cat ~/.kube/config | base64` конфиг kubectl . 
+Для дешифрации внутри пайплайна будем использовать обратную команду - `echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > kubeconfig` .
+'YANDEX_CONFIG_DATA' - конфиг для yc. Дешифрация аналогично.
+
+Из нестандартных "плюшек" в нашем пайплайне будет установка yc и конфиг под яндекс:
+
+```
+      - name: install yc
+        run: |
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+
+      - name: Create yandexconfig
+        env:
+          YANDEX_CONFIG_DATA: ${{ secrets.YANDEX_CONFIG_DATA }}
+        run : |
+          mkdir -pv ${HOME}/.config/yandex-cloud/
+          echo "${YANDEX_CONFIG_DATA}" | base64 --decode > ${HOME}/.config/yandex-cloud/config.yaml
+```
 
 Попутно допиливаем for_ingress/kuber-grafana.yaml - ранее у нас был создан ингресс только для grafana, теперь надо добавить сюда наше приложение:
 
@@ -231,9 +253,24 @@ kubectl apply -f service.yaml
 kubectl apply -f kuber-grafana.yaml
 ```
 
-Проверяем что приложение работает
+Итоговый результат https://github.com/WilderWein123/devops-diplom-app/tree/main/.github/workflows
+
+Проверяем что приложение работает (для начала на локальном докере)
+
+```
+docker run -d -p 80:80 wilderwein123/devops-diplom-yandexcloud
+```
 
 <img src = "images/img4-1.jpg" width = 100%>
+
+Запускаем пайплайн:
+
+<img src = "images/img4-2.jpg" width = 100%>
+
+И восторгаемся полученным результатом:
+
+<img src = "images/img4-3.jpg" width = 100%>
+
 
 ---
 ## Что необходимо для сдачи задания?
