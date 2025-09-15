@@ -245,6 +245,21 @@ https://github.com/WilderWein123/devops-diplom-app/blob/main/Dockerfile
           echo "${YANDEX_CONFIG_DATA}" | base64 --decode > ${HOME}/.config/yandex-cloud/config.yaml
 ```
 
+Также так как запускаем деплой мы в раннере, и не имеем там утилиты yc, то в конфиге kubernetes нужно изменить строку
+
+```
+command: yc
+
+```
+
+на
+
+```
+command: {$HOME}/../yandex-cloud/bin/yc
+
+```
+(по каким то причинам {$HOME} в раннере дописывает еще одну дополнительную директорию, для выхода из которой в пути нужно добавить `../` ....
+
 Попутно допиливаем for_ingress/kuber-grafana.yaml - ранее у нас был создан ингресс только для grafana, теперь надо добавить сюда наше приложение:
 
 ```
