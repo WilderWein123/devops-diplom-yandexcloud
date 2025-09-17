@@ -289,6 +289,8 @@ docker run -d -p 80:80 wilderwein123/devops-diplom-yandexcloud
 <img src = "images/img4-3.jpg" width = 100%>
 
 
+http://158.160.179.7/devops-diplom-app
+
 ---
 ## Что необходимо для сдачи задания?
 
