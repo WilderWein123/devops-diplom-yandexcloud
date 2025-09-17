@@ -188,7 +188,7 @@ seregin@workstation:~/scripts/devops-diplom-yandexcloud/devops-diplom-yandexclou
 
 <img src = "images/img2-4.jpg" width = 100%>
 
-http://158.160.179.7/public-dashboards/823ccc7d43bd4885918b31f7821f942f
+http://158.160.179.7/public-dashboards/0a1c8266e90d4c2eba785a59f07d909f
 
 Займемся приложением. Репозиторий https://github.com/WilderWein123/devops-diplom-app/tree/main .
 
